@@ -82,9 +82,11 @@ No se deben editar manualmente.
 
 🚀 Uso del Sistema LDAP
   1. Construir la imagen
+
 	  docker compose build
   
-  3. Levantar el servicio
+  2. Levantar el servicio
+
 	  docker compose up -d
 
 👤 Gestión de Usuarios LDAP
