@@ -84,7 +84,7 @@ No se deben editar manualmente.
   1. Construir la imagen
 	  docker compose build
   
-  2. Levantar el servicio
+  3. Levantar el servicio
 	  docker compose up -d
 
 👤 Gestión de Usuarios LDAP
