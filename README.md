@@ -81,64 +81,64 @@ lock.mdb
 No se deben editar manualmente.
 
 🚀 Uso del Sistema LDAP
-1. Construir la imagen
-docker compose build
-
-2. Levantar el servicio
-docker compose up -d
+  1. Construir la imagen
+	  docker compose build
+  
+  2. Levantar el servicio
+	  docker compose up -d
 
 👤 Gestión de Usuarios LDAP
-✅ A. Listar usuarios
-1. Ver todos los usuarios
-docker exec -it ldap ldapsearch -x -H ldap://localhost \
--D "cn=admin,dc=hashimodos,dc=local" -w admin123 \
--b "ou=People,dc=hashimodos,dc=local"
 
-2. Ver solo usuarios (objectClass inetOrgPerson)
-docker exec -it ldap ldapsearch -x -H ldap://localhost \
--D "cn=admin,dc=hashimodos,dc=local" -w admin123 \
--b "ou=People,dc=hashimodos,dc=local" "(objectClass=inetOrgPerson)"
+✅ Listar usuarios
+  1. Ver todos los usuarios
+	docker exec -it ldap ldapsearch -x -H ldap://localhost \
+	-D "cn=admin,dc=hashimodos,dc=local" -w admin123 \
+	-b "ou=People,dc=hashimodos,dc=local"
+  
+  2. Ver solo usuarios (objectClass inetOrgPerson)
+	docker exec -it ldap ldapsearch -x -H ldap://localhost \
+	-D "cn=admin,dc=hashimodos,dc=local" -w admin123 \
+	-b "ou=People,dc=hashimodos,dc=local" "(objectClass=inetOrgPerson)"
+  
+  3. Listar solo los UID
+	docker exec -it ldap ldapsearch -x -LLL -H ldap://localhost \
+	-D "cn=admin,dc=hashimodos,dc=local" -w admin123 \
+	-b "ou=People,dc=hashimodos,dc=local" uid
 
-3. Listar solo los UID
-docker exec -it ldap ldapsearch -x -LLL -H ldap://localhost \
--D "cn=admin,dc=hashimodos,dc=local" -w admin123 \
--b "ou=People,dc=hashimodos,dc=local" uid
-
-🔄 B. Modificar usuarios
-Ejemplo para añadir correo
-dn: uid=usuario1,ou=People,dc=hashimodos,dc=local
-changetype: modify
-add: mail
-mail: usuario1@hashimodos.local
-
-
-Aplicación:
-
-docker exec -it ldap ldapmodify -x -H ldap://localhost \
--D "cn=admin,dc=hashimodos,dc=local" -w admin123 -f /usuario1.ldif
-
-🗑️ C. Eliminar usuarios
-Método recomendado (ldapdelete)
-docker exec -it ldap ldapdelete -x -H ldap://localhost \
--D "cn=admin,dc=hashimodos,dc=local" -w admin123 \
-"uid=usuario1,ou=People,dc=hashimodos,dc=local"
-
-Alternativa con LDIF
-dn: uid=usuario1,ou=People,dc=hashimodos,dc=local
-changetype: delete
+🔄 Modificar usuarios
+  Ejemplo para añadir correo
+	dn: uid=usuario1,ou=People,dc=hashimodos,dc=local
+	changetype: modify
+	add: mail
+	mail: usuario1@hashimodos.local
 
 
-Aplicación:
+  Aplicación:
+	docker exec -it ldap ldapmodify -x -H ldap://localhost \
+	-D "cn=admin,dc=hashimodos,dc=local" -w admin123 -f /usuario1.ldif
 
-docker exec -it ldap ldapmodify -x -H ldap://localhost \
--D "cn=admin,dc=hashimodos,dc=local" -w admin123 \
--f /delete-user.ldif
+🗑️ Eliminar usuarios
+  Método recomendado (ldapdelete)
+	docker exec -it ldap ldapdelete -x -H ldap://localhost \
+	-D "cn=admin,dc=hashimodos,dc=local" -w admin123 \
+	"uid=usuario1,ou=People,dc=hashimodos,dc=local"
+
+  Alternativa con LDIF
+	dn: uid=usuario1,ou=People,dc=hashimodos,dc=local
+	changetype: delete
+
+
+  Aplicación:
+	docker exec -it ldap ldapmodify -x -H ldap://localhost \
+	-D "cn=admin,dc=hashimodos,dc=local" -w admin123 \
+	-f /delete-user.ldif
 
 🔍 Verificación
+
 ✔️ Comprobar que un usuario existe
-docker exec -it ldap ldapsearch -x -H ldap://localhost \
--D "cn=admin,dc=hashimodos,dc=local" -w admin123 \
--b "ou=People,dc=hashimodos,dc=local" "(uid=usuario1)"
+	docker exec -it ldap ldapsearch -x -H ldap://localhost \
+	-D "cn=admin,dc=hashimodos,dc=local" -w admin123 \
+	-b "ou=People,dc=hashimodos,dc=local" "(uid=usuario1)"
 
 
 Si no aparece ningún resultado → el usuario ha sido eliminado.
