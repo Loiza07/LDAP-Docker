@@ -80,6 +80,20 @@ lock.mdb
 
 No se deben editar manualmente.
 
+6. home/asir2/certs/
+
+🔹phpldap/
+
+Contiene los certificados necesarios para el uso de certificados SSL de phpldapadmin
+
+🔹ldap/
+
+Contiene los certificados necesarios para el uso de certificados SSL de ldap
+
+🔹keycloak/
+
+Contiene los certificados necesarios para el uso de certificados SSL de keycloak
+
 🚀 Uso del Sistema LDAP
   1. Construir la imagen
 
